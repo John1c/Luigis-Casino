@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw2h840io3iye"]
+
+[sub_resource type="Gradient" id="Gradient_8blkj"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t7a2k"]
+gradient = SubResource("Gradient_8blkj")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+metadata/_snap_enabled = true
+
+[node name="Card" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 128.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_t7a2k")
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(4, 1)
+metadata/_edit_use_anchors_ = true
