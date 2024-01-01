@@ -1,3 +1,48 @@
-[gd_scene format=3 uid="uid://cswepbmdqqofw"]
+[gd_scene load_steps=4 format=3 uid="uid://cswepbmdqqofw"]
 
-[node name="Main" type="Node2D"]
+[ext_resource type="Script" path="res://main.cs" id="1_q1hl7"]
+[ext_resource type="Texture2D" uid="uid://dm50k8sfjgmj" path="res://icon.svg" id="2_fljya"]
+[ext_resource type="Script" path="res://hit.cs" id="3_due8x"]
+
+[node name="Node" type="Node2D"]
+script = ExtResource("1_q1hl7")
+
+[node name="Button" type="Button" parent="."]
+offset_top = 2.0
+offset_right = 136.0
+offset_bottom = 138.0
+text = "Hit"
+icon = ExtResource("2_fljya")
+script = ExtResource("3_due8x")
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 530.0
+offset_top = 1.0
+offset_right = 697.0
+offset_bottom = 137.0
+text = "Bet"
+icon = ExtResource("2_fljya")
+
+[node name="Button3" type="Button" parent="."]
+offset_left = 965.0
+offset_top = 514.0
+offset_right = 1148.0
+offset_bottom = 650.0
+text = "Reset"
+icon = ExtResource("2_fljya")
+
+[node name="Button4" type="Button" parent="."]
+offset_left = 234.0
+offset_top = 1.0
+offset_right = 419.0
+offset_bottom = 137.0
+text = "Stand"
+icon = ExtResource("2_fljya")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 39.0
+offset_top = 559.0
+offset_right = 79.0
+offset_bottom = 599.0
