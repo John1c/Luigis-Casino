@@ -1,56 +1,60 @@
-using Godot;
 using System;
+using System.Collections.Generic;
+using Godot;
 
-public partial class deck : Node2D
+namespace CardSystem
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		shuffle();
-	}
+	public class Deck
+	{	
+		List<Card> cards = new List<Card>();
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) { }
-
-	public void shuffle()
-	{
-		GD.Print("Shuffling deck...");
-		
-		// reset deck 
-		cards.Clear();
-
-		// create deck
-		for (int suit = 0; suit < 4; suit++) // suits (diamonds, clubs, hearts, spades)
+		public Deck()
 		{
-			for (int id = 1; id < 14; id++) // id's (1-13) 
+			createDeck(); // create deck
+			shuffleDeck(); // shuffle deck
+		}
+	
+		public void createDeck()
+		{
+			// reset deck 
+			cards.Clear();
+
+			// create deck
+			for (int suit = 0; suit < 4; suit++) // suits (diamonds, clubs, hearts, spades)
+				for (int id = 1; id < 14; id++) // id's (1-13) 
+					cards.Add(new Card(suit, id));
+		}
+
+		public void shuffleDeck()
+		{
+			// randomize deck
+			GD.Print("Shuffling deck...");
+			Random random = new Random();
+			for (int i = 0; i < cards.Count; i++)
 			{
-				Card card = new Card();
-				card.suit = suit;
-				card.id = id;
-				card.value = (id > 10) ? 10 : id; // Face card value = 10 
-				cards.Add(card);
+				int randomIndex = random.Next(0, cards.Count);
+				Card temp = cards[i];
+				cards[i] = cards[randomIndex];
+				cards[randomIndex] = temp;
 			}
 		}
-		
-		// shuffle deck
-		Random rand = new Random();
-		for (int i = 0; i < cards.Count; i++)
+
+	
+		public Card drawRandomCard()
 		{
-			int r = rand.Next(i, cards.Count);
-			Card temp = cards[i];
-			cards[i] = cards[r];
-			cards[r] = temp;
+			// check if deck is empty
+			if (cards.Count == 0)
+			{
+				GD.Print("Deck is empty!");
+				return null;
+			}
+
+			// draw random card
+			Random random = new Random();
+			int randomIndex = random.Next(0, cards.Count);
+			Card card = cards[randomIndex];
+			cards.RemoveAt(randomIndex);
+			return card;
 		}
-	}
-
-	public Card drawRandomCard()
-	{
-		// if any cards left in deck
-		if (cards.Count == 0)
-			return null;
-
-		Card card = cards[0];
-		cards.RemoveAt(0);
-		return card;
 	}
 }

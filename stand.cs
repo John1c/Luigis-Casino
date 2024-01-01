@@ -1,22 +1,21 @@
 using Godot;
 using System;
 
-public partial class hit : Button
+public partial class stand : Button
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		var hitButton = new Button();
-		hitButton.Text = "Hit";
-		hitButton.Pressed += ButtonPressed;
-		AddChild(hitButton);
+		var standButton = new Button();
+		standButton.Text = "stand";
+		standButton.Pressed += ButtonPressed;
+		AddChild(standButton);
 	}
 
 	private void ButtonPressed()
 	{
-		GD.Print("Hit");
+		GD.Print("stand");
 	}
-
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)

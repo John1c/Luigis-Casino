@@ -1,41 +1,23 @@
-using Godot;
 using System;
 
-public partial class card : Node2D
+namespace CardSystem
 {
-	public int id {
-		get { return _id; }
-		set {
-			// ensure its a valid id (1-13)
-			if (value < 1 || value > 13) {
-				GD.Print("Invalid card id: " + value);
-				return;
-			}
+	public class Card
+	{
+		public int suit { get; set; } = 0; // 0 = Diamonds, 1 = Clubs, 2 = Hearts, 3 = Spades
+		public int id { get; set; } = 0; // 1 = Ace, 1 = 2, 2 = 3, ... 9 = 10, 11 = Jack, 12 = Queen, 13 = King
+		public int value { get; set; } = 0; //
+
+		public Card(int suit, int id)
+		{
+			this.suit = suit;
+			this.id = id;
+
+			// Set value of card
+			this.value = (id > 10) ? 10 : id; // Jack, Queen, King = 10, else same as id
+
+			if (id == 1) // Ace
+				this.value = 11;
 		}
 	}
-	public int suit {
-		get { return _suit; }
-		set {
-			// ensure its a valid suit (1-4)
-			if (value < 1 || value > 4) {
-				GD.Print("Invalid card suit: " + value);
-				return;
-			}
-		}
-	}
-	public int value { get; set; } = 0;
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-
-
 }
