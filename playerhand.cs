@@ -24,46 +24,54 @@ namespace CardSystem
 		public static int getHandValue(this playerHand hand)
 		{
 			int sum = 0;
-
-			// count all cards values
+			
 			for (int i = 0; i < hand.cards.Count(); i++)
 				sum += hand.cards[i].value;
 
-			while (sum > 21)
+			bool done = false;
+
+			while (sum > 21 && !done)
 			{
-				// check if any cards are aces
-				var unflippedAcesLeft = hand.cards.Where(x => x.id == 1 && x.value == 11).ToList();
-				if (unflippedAcesLeft.Count() == 0)
-					break;
-
-				// flip an ace
-				unflippedAcesLeft[0].value = 1;
-				sum -= 10;
+				done = true;
+				for (int i = 0; i < hand.cards.Count(); i++)
+				{
+					if(hand.cards[i].value == 11 && sum > 21 && done)
+					{
+						hand.cards[i].value = 1;
+						sum -= 10;
+						done = false;
+					}
+				}
 			}
- 
 
+			for (int i = 0; i < hand.cards.Count(); i++)
+				if(hand.cards[i].value == 1)
+					hand.cards[i].value = 11;
 
-
-
-
-
+			
 
 			return sum;
 		}
 
+		public static string getWinState(int playerVal, int dealerVal)
+		{
+			if	   (playerVal > 21)
+				return "lost";
+			else if(dealerVal > 21)
+				return "lost";
+			else if(dealer)
+			else if(dealerVal >= playerVal)
+				return "lost";
+			else if
+			
 
 
-//		public void GAMELOGIC()
-//		{
-//			playerHand player = new playerHand();
-//			playerHand dealer = new playerHand(true);
-//
-//			// check if user has blackjack
-//			if (player.handValue == 21)
-//			{
-//				// player wins
-//			}
-//		}
+
+		}
 	}
+
+
+
 }
+
 

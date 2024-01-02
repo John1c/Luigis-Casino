@@ -22,3 +22,9 @@ public partial class stand : Button
 	{
 	}
 }
+
+
+private void _on_button_up()
+{
+	// Replace with function body.
+}
