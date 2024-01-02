@@ -53,21 +53,7 @@ namespace CardSystem
 			return sum;
 		}
 
-		public static string getWinState(int playerVal, int dealerVal)
-		{
-			if	   (playerVal > 21)
-				return "lost";
-			else if(dealerVal > 21)
-				return "lost";
-			else if(dealer)
-			else if(dealerVal >= playerVal)
-				return "lost";
-			else if
-			
-
-
-
-		}
+		
 	}
 
 
