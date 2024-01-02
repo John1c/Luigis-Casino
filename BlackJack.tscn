@@ -1,0 +1,251 @@
+[gd_scene load_steps=18 format=3 uid="uid://cswepbmdqqofw"]
+
+[ext_resource type="Script" path="res://BlackJack.cs" id="1_a5ugd"]
+[ext_resource type="Texture2D" uid="uid://cl1kgyudgkcew" path="res://Assets/background.png" id="1_g04td"]
+[ext_resource type="Texture2D" uid="uid://c36bpv2n2vtxa" path="res://Assets/BetArrow.png" id="3_8c2f0"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="3_i1or4"]
+[ext_resource type="Texture2D" uid="uid://c2kcmskirag6r" path="res://Assets/PressedBetArrow.png" id="4_dk7cp"]
+[ext_resource type="Script" path="res://bet.cs" id="4_s6vtt"]
+[ext_resource type="Script" path="res://Hand.cs" id="5_4evft"]
+[ext_resource type="Texture2D" uid="uid://baih145mqeb1b" path="res://Assets/HoverBetArrow.png" id="5_w3gq8"]
+[ext_resource type="Script" path="res://generateCardInHand.cs" id="6_7tinw"]
+[ext_resource type="Texture2D" uid="uid://y1hovn6loq6l" path="res://Assets/HitButton.png" id="7_lqcp0"]
+[ext_resource type="Texture2D" uid="uid://bixtvct2vsfnk" path="res://Assets/HitButtonPressed.png" id="8_n24st"]
+[ext_resource type="Texture2D" uid="uid://gospe1bpicqu" path="res://Assets/HitButtonHoverpng.png" id="9_6i5y3"]
+[ext_resource type="Texture2D" uid="uid://doequ13yilkho" path="res://Assets/StandButton.png" id="10_1bn56"]
+[ext_resource type="Texture2D" uid="uid://bwdcxvhl2xiqv" path="res://Assets/StandPressed.png" id="11_2flyr"]
+[ext_resource type="Texture2D" uid="uid://dn8aclirwtht3" path="res://Assets/StandHover.png" id="12_gmycp"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qlxhw"]
+margins = Vector2i(119, 40)
+separation = Vector2i(7, 22)
+texture_region_size = Vector2i(68, 105)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+16:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+16:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+16:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+13:5/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+16:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_k6hun"]
+tile_size = Vector2i(70, 107)
+terrain_set_0/mode = 0
+sources/6 = SubResource("TileSetAtlasSource_qlxhw")
+
+[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "MenuButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a5ugd")
+HitButton = NodePath("HitButton")
+StandButton = NodePath("StandButton")
+MenuButton = NodePath("MenuButton")
+
+[node name="Backdrop" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_g04td")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BetArrow" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 607.0
+offset_top = 685.0
+offset_right = 647.0
+offset_bottom = 725.0
+scale = Vector2(1.59971, 1.59971)
+texture_normal = ExtResource("3_8c2f0")
+texture_pressed = ExtResource("4_dk7cp")
+texture_hover = ExtResource("5_w3gq8")
+
+[node name="MenuButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 40
+text = "Menu"
+
+[node name="HitButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 531.0
+offset_top = 851.0
+offset_right = 734.0
+offset_bottom = 909.0
+texture_normal = ExtResource("7_lqcp0")
+texture_pressed = ExtResource("8_n24st")
+texture_hover = ExtResource("9_6i5y3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StandButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 532.0
+offset_top = 776.0
+offset_right = 734.0
+offset_bottom = 834.0
+texture_normal = ExtResource("10_1bn56")
+texture_pressed = ExtResource("11_2flyr")
+texture_hover = ExtResource("12_gmycp")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="UI" type="Node2D" parent="."]
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+offset_left = 501.0
+offset_right = 669.0
+offset_bottom = 183.0
+
+[node name="Bet" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Bet"
+icon = ExtResource("3_i1or4")
+script = ExtResource("4_s6vtt")
+
+[node name="HSlider" type="HSlider" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Bet amount" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hand" type="HBoxContainer" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 1028.0
+offset_right = 1161.0
+offset_bottom = 1157.0
+scale = Vector2(0.652788, 0.85115)
+alignment = 1
+script = ExtResource("5_4evft")
+
+[node name="ShownCard" type="TextureRect" parent="Hand"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+texture = ExtResource("3_i1or4")
+script = ExtResource("6_7tinw")
+
+[node name="TileMap" type="TileMap" parent="Hand/ShownCard"]
+position = Vector2(-47, -209)
+tile_set = SubResource("TileSet_k6hun")
+format = 2
+
+[node name="ShownCard2" type="TextureRect" parent="Hand"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+texture = ExtResource("3_i1or4")
+script = ExtResource("6_7tinw")
+
+[connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]
+[connection signal="button_up" from="HitButton" to="." method="_on_HitButton_up"]
+[connection signal="button_up" from="StandButton" to="." method="_on_StandButton_up"]

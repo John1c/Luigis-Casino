@@ -11,6 +11,10 @@ public partial class hit : Button
 //		hitButton.Pressed += ButtonPressed;
 //		AddChild(hitButton);
 	}
+	private void _on_button_up()
+	{	
+		GD.Print("Hit");
+	}
 
 
 
@@ -22,7 +26,3 @@ public partial class hit : Button
 }
 
 
-private void _on_button_up()
-{
-	GD.Print("Hit");
-}

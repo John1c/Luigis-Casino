@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co8y2xm1dc0on"
-path="res://.godot/imported/cardTilemap.jpg-9df5f554a927ed0916ce16cfe0d4e4a1.ctex"
+uid="uid://c36bpv2n2vtxa"
+path="res://.godot/imported/BetArrow.png-7ad682e0936a3af44e2242df8fe615f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://cardTilemap.jpg"
-dest_files=["res://.godot/imported/cardTilemap.jpg-9df5f554a927ed0916ce16cfe0d4e4a1.ctex"]
+source_file="res://Assets/BetArrow.png"
+dest_files=["res://.godot/imported/BetArrow.png-7ad682e0936a3af44e2242df8fe615f8.ctex"]
 
 [params]
 

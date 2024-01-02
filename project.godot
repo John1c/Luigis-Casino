@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Luigis-casino"
-run/main_scene="res://main.tscn"
+run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=769
+window/size/viewport_height=1142
 
 [dotnet]
 
