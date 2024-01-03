@@ -5,29 +5,47 @@ using System.Security.Cryptography.X509Certificates;
 
 public partial class BlackJack : Control
 {
-	playerHand player;
-	playerHand dealer;
-	Deck deck;
+	// Components
 	[Export] public TextureButton HitButton;
-
 	[Export] public TextureButton StandButton;
-
+	[Export] public TextureButton BetButton;
 	[Export] public Button MenuButton;
+
+
+	// Variables
+	public playerHand player;
+	public playerHand dealer;
+	public Deck deck;
 	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
 		player = new playerHand(false);
 		dealer = new playerHand(true);
-		deck = new Deck();
-		deck.createDeck();
-		deck.shuffleDeck();
-
+		deck = new Deck(); // this creates a new deck of cards and shuffles them
 	}
 
+	public void _on_BetButton_up()
+	{
+		if (player.Balance >= 5)
+		{
+			player.betAmount += 5;
+			player.Balance -= 5;
+		}
+		else
+		{
+			player.betAmount += player.Balance;
+			player.Balance = 0;
+		}
 
+		// if balance is 0, disable bet button
+		if (player.Balance == 0)
+		{
+			BetButton.Disabled = true;
+			BetButton.Hide();
+		}
+	}
 
 	public void _on_HitButton_up()
 	{
@@ -65,12 +83,12 @@ public partial class BlackJack : Control
 	
 	public static string getWinState(playerHand player, playerHand dealer)
 	{
-		if	   (player.handValue > 21)
+		if (player.handValue > 21)
 			return "lost";
 		else if(dealer.handValue > 21)
 			return "won";
 		else if(dealer.handValue == 21 && player.handValue == 21 && dealer.cards.Count == 2 && player.cards.Count == 2)
-			return "tie";
+			return "push";
 		else if(dealer.handValue >= player.handValue)
 			return "lost";
 		else if (dealer.handValue < player.handValue)

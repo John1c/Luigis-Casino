@@ -16,11 +16,12 @@ namespace CardSystem
 	
 		public void createDeck()
 		{
+			GD.Print("Creating deck...");
 			// reset deck 
 			cards.Clear();
 
 			// create deck
-			for (int suit = 0; suit < 4; suit++) // suits (diamonds, clubs, hearts, spades)
+			for (int suit = 0; suit < 4; suit++) // suits (spades, hearts, diamonds, clubs)
 				for (int id = 1; id < 14; id++) // id's (1-13) 
 					cards.Add(new Card(suit, id));
 		}

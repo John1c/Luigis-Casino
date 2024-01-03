@@ -8,6 +8,8 @@ namespace CardSystem
 	public class playerHand
 	{
 		public bool isDealer = false;
+		public int Balance = 0;
+		public int betAmount = 0;
 		public List<Card> cards = new List<Card>();
 		public int handValue {
 			get { return this.getHandValue(); }
