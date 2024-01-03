@@ -9,7 +9,7 @@ public partial class BlackJack : Control
 	[Export] public TextureButton HitButton;
 	[Export] public TextureButton StandButton;
 	[Export] public TextureButton BetButton;
-	[Export] public Button MenuButton;
+	[Export] public TextureButton MenuButton;
 
 
 	// Variables

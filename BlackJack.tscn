@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cswepbmdqqofw"]
+[gd_scene load_steps=17 format=3 uid="uid://cswepbmdqqofw"]
 
 [ext_resource type="Script" path="res://BlackJack.cs" id="1_a5ugd"]
 [ext_resource type="Texture2D" uid="uid://cl1kgyudgkcew" path="res://Assets/background.png" id="1_g04td"]
@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://c2kcmskirag6r" path="res://Assets/PressedBetArrow.png" id="4_dk7cp"]
 [ext_resource type="Texture2D" uid="uid://baih145mqeb1b" path="res://Assets/HoverBetArrow.png" id="5_w3gq8"]
 [ext_resource type="Script" path="res://generateCardInHand.cs" id="6_7tinw"]
+[ext_resource type="Texture2D" uid="uid://boorkw4ntewrl" path="res://Assets/SettingsButton.png" id="6_c8rl5"]
+[ext_resource type="Texture2D" uid="uid://c51cw7ebjstaj" path="res://Assets/SettingsPressed.png" id="7_8ubf4"]
 [ext_resource type="Texture2D" uid="uid://y1hovn6loq6l" path="res://Assets/HitButton.png" id="7_lqcp0"]
+[ext_resource type="Texture2D" uid="uid://p08agomieonx" path="res://Assets/SettingsHover.png" id="8_2sa5e"]
 [ext_resource type="Texture2D" uid="uid://bixtvct2vsfnk" path="res://Assets/HitButtonPressed.png" id="8_n24st"]
 [ext_resource type="Texture2D" uid="uid://gospe1bpicqu" path="res://Assets/HitButtonHoverpng.png" id="9_6i5y3"]
 [ext_resource type="Texture2D" uid="uid://doequ13yilkho" path="res://Assets/StandButton.png" id="10_1bn56"]
@@ -55,7 +58,20 @@ texture_normal = ExtResource("3_8c2f0")
 texture_pressed = ExtResource("4_dk7cp")
 texture_hover = ExtResource("5_w3gq8")
 
-[node name="MenuButton" type="Button" parent="."]
+[node name="MenuButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 270.0
+offset_bottom = 266.0
+scale = Vector2(0.173741, 0.169591)
+texture_normal = ExtResource("6_c8rl5")
+texture_pressed = ExtResource("7_8ubf4")
+texture_hover = ExtResource("8_2sa5e")
+ignore_texture_size = true
+
+[node name="MenuButtonold" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
@@ -109,7 +125,7 @@ position = Vector2(431.993, 16.4483)
 scale = Vector2(2, 2)
 tile_set = ExtResource("12_neqkx")
 format = 2
-layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2, 65535, 0, 3, 0, 65536, 3, 1, 196608, 1, 2, 131072, 1)
+layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2)
 
 [connection signal="button_up" from="BetArrow" to="." method="_on_BetButton_up"]
 [connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]

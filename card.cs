@@ -30,7 +30,7 @@ namespace CardSystem
 				this.value = 11;
 		}
 
-
+		/*
 		// function to get the card image from the atlas based on the card's suit and value
 		// tilemap source name is TileCards
 		public Sprite getCardImage(Card card)
@@ -75,5 +75,8 @@ namespace CardSystem
 			// return sprite;
 			return null;
 		}
+		*/
 	}
 }
+
+		
