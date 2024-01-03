@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfbkavey7wh12"]
+
+[ext_resource type="TileSet" uid="uid://k32pu4qiqnk0" path="res://CardTileSets.tres" id="1_j2ud5"]
+[ext_resource type="Script" path="res://Container.cs" id="1_lnstn"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CardMask" type="Container" parent="." node_paths=PackedStringArray("moveBtnUp", "moveBtnDown", "moveBtnLeft", "moveBtnRight")]
+clip_contents = true
+offset_right = 69.0
+offset_bottom = 104.0
+script = ExtResource("1_lnstn")
+moveBtnUp = NodePath("../moveBtnUp")
+moveBtnDown = NodePath("../moveBtnDown")
+moveBtnLeft = NodePath("../moveBtnLeft")
+moveBtnRight = NodePath("../moveBtnRight")
+
+[node name="CardSets" type="TileMap" parent="CardMask"]
+position = Vector2(-3, 0)
+tile_set = ExtResource("1_j2ud5")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1, 131072, 0, 2, 196608, 0, 3, 1, 65536, 0, 65537, 65536, 1, 131073, 65536, 2, 196609, 65536, 3, 2, 131072, 0, 65538, 131072, 1, 131074, 131072, 2, 196610, 131072, 3, 3, 196608, 0, 65539, 196608, 1, 131075, 196608, 2, 196611, 196608, 3, 4, 262144, 0, 65540, 262144, 1, 131076, 262144, 2, 196612, 262144, 3, 5, 327680, 0, 65541, 327680, 1, 131077, 327680, 2, 196613, 327680, 3, 6, 393216, 0, 65542, 393216, 1, 131078, 393216, 2, 196614, 393216, 3, 7, 458752, 0, 65543, 458752, 1, 131079, 458752, 2, 196615, 458752, 3, 8, 524288, 0, 65544, 524288, 1, 131080, 524288, 2, 196616, 524288, 3, 9, 589824, 0, 65545, 589824, 1, 131081, 589824, 2, 196617, 589824, 3, 10, 655360, 0, 65546, 655360, 1, 131082, 655360, 2, 196618, 655360, 3, 11, 720896, 0, 65547, 720896, 1, 131083, 720896, 2, 196619, 720896, 3, 12, 786432, 0, 65548, 786432, 1, 131084, 786432, 2, 196620, 786432, 3, 262144, 0, 4, 262145, 65536, 4, 262146, 131072, 4, 262147, 655360, 4, 262148, 720896, 4, 262149, 786432, 4)
+
+[node name="moveBtnRight" type="Button" parent="."]
+offset_left = 325.0
+offset_top = 92.0
+offset_right = 376.0
+offset_bottom = 123.0
+text = "Right"
+
+[node name="moveBtnLeft" type="Button" parent="."]
+offset_left = 219.0
+offset_top = 91.0
+offset_right = 270.0
+offset_bottom = 122.0
+text = "Left"
+
+[node name="moveBtnDown" type="Button" parent="."]
+offset_left = 271.0
+offset_top = 125.0
+offset_right = 324.0
+offset_bottom = 156.0
+text = "Down
+"
+
+[node name="moveBtnUp" type="Button" parent="."]
+offset_left = 271.0
+offset_top = 57.0
+offset_right = 322.0
+offset_bottom = 88.0
+text = "Up"
+
+[connection signal="button_up" from="moveBtnRight" to="CardMask" method="_on_btnMoveTileMapRight"]
+[connection signal="button_up" from="moveBtnLeft" to="CardMask" method="_on_btnMoveTileMapLeft"]
+[connection signal="button_up" from="moveBtnDown" to="CardMask" method="_on_btnMoveTileMapDown"]
+[connection signal="button_up" from="moveBtnUp" to="CardMask" method="_on_btnMoveTileMapUp"]

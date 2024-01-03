@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cswepbmdqqofw"]
+[gd_scene load_steps=21 format=3 uid="uid://cswepbmdqqofw"]
 
 [ext_resource type="Script" path="res://BlackJack.cs" id="1_a5ugd"]
 [ext_resource type="Texture2D" uid="uid://cl1kgyudgkcew" path="res://Assets/background.png" id="1_g04td"]
@@ -16,6 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://bwdcxvhl2xiqv" path="res://Assets/StandPressed.png" id="11_2flyr"]
 [ext_resource type="Texture2D" uid="uid://dn8aclirwtht3" path="res://Assets/StandHover.png" id="12_gmycp"]
 [ext_resource type="TileSet" uid="uid://k32pu4qiqnk0" path="res://CardTileSets.tres" id="12_neqkx"]
+[ext_resource type="Script" path="res://Coins.cs" id="17_hj70i"]
+[ext_resource type="Texture2D" uid="uid://cwv17ugh6rl5h" path="res://icon.svg" id="18_eqji2"]
+[ext_resource type="PackedScene" uid="uid://t17845gvy5dd" path="res://coin_scene.tscn" id="19_hi04u"]
+[ext_resource type="PackedScene" uid="uid://bfbkavey7wh12" path="res://card_tile_set.tscn" id="20_tsh82"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton")]
 layout_mode = 3
@@ -126,6 +130,22 @@ scale = Vector2(2, 2)
 tile_set = ExtResource("12_neqkx")
 format = 2
 layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2)
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("17_hj70i")
+
+[node name="Coin" type="Sprite2D" parent="Node2D"]
+position = Vector2(141, 565)
+texture = ExtResource("18_eqji2")
+
+[node name="CoinScene" parent="Node2D" instance=ExtResource("19_hi04u")]
+offset_left = 716.0
+offset_top = 577.0
+offset_right = 716.0
+offset_bottom = 577.0
+
+[node name="Node" parent="Node2D" instance=ExtResource("20_tsh82")]
+position = Vector2(384, 849)
 
 [connection signal="button_up" from="BetArrow" to="." method="_on_BetButton_up"]
 [connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]
