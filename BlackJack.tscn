@@ -89,9 +89,9 @@ stretch_mode = 0
 [node name="Hand" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 1028.0
+offset_top = 922.0
 offset_right = 1161.0
-offset_bottom = 1157.0
+offset_bottom = 1175.0
 scale = Vector2(0.652788, 0.85115)
 alignment = 1
 
@@ -99,17 +99,17 @@ alignment = 1
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="TileMap" type="TileMap" parent="Hand/ShownCard"]
-position = Vector2(-43.5387, -101.04)
-scale = Vector2(2, 2)
-tile_set = ExtResource("12_neqkx")
-format = 2
-layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2, 0, 0, 0, 65535, 131072, 0, 2, 262144, 2, 1, 65536, 3, 65534, 196608, 2, 3, 262144, 1, -262144, 655360, 3, -262143, 262144, 0, -196609, 327680, 2)
-
 [node name="ShownCard2" type="TextureRect" parent="Hand"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 script = ExtResource("6_7tinw")
+
+[node name="TileMap" type="TileMap" parent="Hand"]
+position = Vector2(431.993, 16.4483)
+scale = Vector2(2, 2)
+tile_set = ExtResource("12_neqkx")
+format = 2
+layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2, 65535, 0, 3, 0, 65536, 3, 1, 196608, 1, 2, 131072, 1)
 
 [connection signal="button_up" from="BetArrow" to="." method="_on_BetButton_up"]
 [connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]

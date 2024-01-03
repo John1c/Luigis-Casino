@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" load_steps=2 format=3 uid="uid://k32pu4qiqnk0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_edyar"]
+resource_name = "TileCards"
 texture = null
 margins = Vector2i(119, 40)
 separation = Vector2i(6, 22)
