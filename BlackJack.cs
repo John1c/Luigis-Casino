@@ -140,26 +140,27 @@ public partial class BlackJack : Control
 	public static WinState getWinState(playerHand player, playerHand dealer)
 	{
 		if (player.handValue > 21)
-			return WinState.lost;
+			return WinState.Lost;
 		else if(dealer.handValue > 21)
-			return WinState.won;
+			return WinState.Won;
 		else if(dealer.handValue == 21 && player.handValue == 21 && dealer.cards.Count == 2 && player.cards.Count == 2)
-			return WinState.push;
+			return WinState.Push;
 		else if(dealer.handValue >= player.handValue)
-			return WinState.lost;
+			return WinState.Lost;
 		else if (dealer.handValue < player.handValue)
-			return WinState.won;
+			return WinState.Won;
 		else
 		{
 			GD.Print("Error: getWinState() returned default case");
-			return WinState.push; // push on default case
+			return WinState.Unknown; // push on default case
 		}
 	}
 
 	public enum WinState
 	{
-		lost,
-		won,
-		push
+		Unknown = 0,
+		Lost = 1,
+		Won = 2,
+		Push = 3,
 	}
 }
