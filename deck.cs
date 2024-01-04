@@ -5,7 +5,7 @@ using Godot;
 namespace CardSystem
 {
 	public class Deck
-	{	
+	{		
 		List<Card> cards = new List<Card>();
 
 		public Deck()

@@ -2,6 +2,7 @@ using CardSystem;
 using Godot;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 public partial class BlackJack : Control
 {
@@ -13,7 +14,8 @@ public partial class BlackJack : Control
 	[Export] public Control WinScreen;
 	[Export] public Control LoseScreen;
 	[Export] public Label winStateLabel;
-
+	[Export] public Label BalanceLabel;
+	[Export] public TextureButton RoundStartButton;
 
 	// Variables
 	public playerHand player;
@@ -27,7 +29,7 @@ public partial class BlackJack : Control
 		player = new playerHand(false);
 		dealer = new playerHand(true);
 		deck = new Deck(); // this creates a new deck of cards and shuffles them
-
+		GD.Print("Deck created");
 		// update player balance
 		player.Balance = 100;
 
@@ -38,32 +40,50 @@ public partial class BlackJack : Control
 		WinScreen.Hide();
 		LoseScreen.Hide();
 
-		// Get winStateLabel path
+		// hide round start button
+		RoundStartButton.Hide();
 		
 				
 	}
+
+	public TextureButton _on_RoundStartButton_up()
+	{	
+		RoundStartButton.Hide();
+		GD.Print("Round Start");
+		RoundStart();
+		return null;
+	}
+
 	public void RoundStart()
 	{
 		// reset player and dealer hands
-		player.cards.Clear();
-		dealer.cards.Clear();
+		player = new playerHand();
+		dealer = new playerHand(true);
 		//reset deck
 		deck = new Deck();
-		// shuffel deck
-		deck.shuffleDeck();
 		// draw 2 cards for player and dealer
+		
 		player.cards.Add(deck.drawRandomCard());
 		player.cards.Add(deck.drawRandomCard());
 
+		GD.Print("add player card 1");
 		dealer.cards.Add(deck.drawRandomCard());
+		GD.Print("add player card 2");
 		dealer.cards.Add(deck.drawRandomCard(true)); // hide the second card
-
+		GD.Print("Player hand: ");
+		for (int i = 0; i < player.cards.Count; i++)
+		{
+			GD.Print(+ player.cards[i].value);	
+		}
+		GD.Print("Player hand value: " + player.handValue);
 		//check if player has blackjack
 		if(player.handValue == 21)
 		{
 			_on_StandButton_up();
 		}
-
+		
+		winStateLabel.Text = "";
+		
 		if(BetButton.Disabled == true && player.Balance > 0)
 		{
 			BetButton.Disabled = false;
@@ -138,16 +158,24 @@ public partial class BlackJack : Control
 
 	public void _on_HitButton_up()
 	{
-
-		setBalance(50);
 		GD.Print("Hit");
-		//give another card to player
 		player.cards.Add(deck.drawRandomCard());
+		
+
+		//print hand 
+		GD.Print("Player hand: ");
+		for (int i = 0; i < player.cards.Count; i++)
+		{
+			GD.Print(+ player.cards[i].value);	
+		}
+		GD.Print("Player hand value: " + player.handValue);
+		//give another card to player
+		
 		//check if player is bust
 		if(player.handValue > 21)
 		{
 			GD.Print("Bust");
-			//end game
+			_on_StandButton_up();
 		}
 		else if(player.handValue == 21)
 		{
@@ -168,46 +196,56 @@ public partial class BlackJack : Control
 			dealer.cards.Add(deck.drawRandomCard());
 		}
 		// get win state
-		
+		GD.Print("dealer hand value:" + dealer.handValue);
 		switch(getWinState())
 		{
 			case WinState.Lost:
 				GD.Print("You lost");
+				player.Balance -= player.betAmount;
 				player.betAmount = 0;
+				winStateLabel.Text = "You lost";
+
 				
 				//restart game
-				RoundStart();
-				winStateLabel.Text = "You lost";
+				RoundStartButton.Show();
+
 				break;
 			case WinState.Won:
 				GD.Print("You won");
 				
-				//restart game
-				RoundStart();
 				winStateLabel.Text = "You won";
 				//points to player
+				player.Balance += player.betAmount * 2;
+
+				Thread.Sleep(500);
+				//restart game
+				RoundStartButton.Show();
 				
 				break;
 			case WinState.Push:
 				
 				GD.Print("Push");
 				
-				//restart game
-				RoundStart();
 				winStateLabel.Text = "Push";
 				// money back
-				
-				
+				player.Balance += player.betAmount;
+
+				Thread.Sleep(500);
+				//restart game
+				RoundStartButton.Show();
+								
 				break;
 			case WinState.BlackJack:
 				GD.Print("BlackJack");
 				
-				//restart game
-				RoundStart();
 				winStateLabel.Text = "Blackjack";
 				// money back + 1.5x
-				
-				
+				player.Balance += (int)(player.betAmount * 2.5);
+
+				Thread.Sleep(500);
+				//restart game
+				RoundStartButton.Show();
+
 				break;
 			case WinState.Unknown:
 				GD.Print("Error: getWinState() returned unknown");

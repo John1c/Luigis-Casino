@@ -1,9 +1,12 @@
-[gd_scene load_steps=32 format=3 uid="uid://cswepbmdqqofw"]
+[gd_scene load_steps=36 format=3 uid="uid://cswepbmdqqofw"]
 
 [ext_resource type="Script" path="res://BlackJack.cs" id="1_a5ugd"]
 [ext_resource type="Texture2D" uid="uid://cl1kgyudgkcew" path="res://Assets/background.png" id="1_g04td"]
+[ext_resource type="Texture2D" uid="uid://berxadohyddk0" path="res://Assets/Next_hand_button.png" id="3_0gb1j"]
 [ext_resource type="Texture2D" uid="uid://c36bpv2n2vtxa" path="res://Assets/BetArrow.png" id="3_8c2f0"]
 [ext_resource type="Texture2D" uid="uid://c2kcmskirag6r" path="res://Assets/PressedBetArrow.png" id="4_dk7cp"]
+[ext_resource type="Texture2D" uid="uid://c5a7j3qrcr6qm" path="res://Assets/pressedNext_hand_button.png" id="4_yhtnj"]
+[ext_resource type="Texture2D" uid="uid://c7jrf8evcb5d0" path="res://Assets/hoverNext_hand_button.png" id="5_byey4"]
 [ext_resource type="Texture2D" uid="uid://baih145mqeb1b" path="res://Assets/HoverBetArrow.png" id="5_w3gq8"]
 [ext_resource type="Script" path="res://generateCardInHand.cs" id="6_7tinw"]
 [ext_resource type="Texture2D" uid="uid://boorkw4ntewrl" path="res://Assets/SettingsButton.png" id="6_c8rl5"]
@@ -21,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bwwjrgq0junoi" path="res://Assets/coin.png" id="20_7wos5"]
 [ext_resource type="PackedScene" uid="uid://bfbkavey7wh12" path="res://card_tile_set.tscn" id="20_tsh82"]
 [ext_resource type="Texture2D" uid="uid://b18jawjuf7xg4" path="res://Assets/Numbers.png" id="21_1nh5k"]
+[ext_resource type="Texture2D" uid="uid://d22alaq5g11wf" path="res://Assets/BetLabel.png" id="23_c6w2i"]
 
 [sub_resource type="Curve" id="Curve_p8aia"]
 _data = [Vector2(0.679688, 0.846154), 0.0, 0.0, 0, 0]
@@ -58,7 +62,7 @@ point_count = 1
 [sub_resource type="CurveTexture" id="CurveTexture_qfaiv"]
 curve = SubResource("Curve_5byvh")
 
-[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton", "WinScreen", "LoseScreen")]
+[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton", "WinScreen", "LoseScreen", "winStateLabel", "BalanceLabel", "RoundStartButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,6 +76,9 @@ BetButton = NodePath("BetArrow")
 MenuButton = NodePath("MenuButton")
 WinScreen = NodePath("WinScreen")
 LoseScreen = NodePath("LostScreen")
+winStateLabel = NodePath("winStates/VBoxContainer/winStateLabel")
+BalanceLabel = NodePath("BalanceLabel")
+RoundStartButton = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RoundStartButton")
 
 [node name="Backdrop" type="TextureRect" parent="."]
 layout_mode = 1
@@ -309,6 +316,31 @@ text = "Restart"
 layout_mode = 2
 text = "Main Menu"
 
+[node name="winStates" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 261.0
+offset_top = 145.0
+offset_right = 517.0
+offset_bottom = 401.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="winStates"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSeparator" type="HSeparator" parent="winStates/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="winStateLabel" type="Label" parent="winStates/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -321,6 +353,23 @@ offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RoundStartButton" type="TextureButton" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+texture_normal = ExtResource("3_0gb1j")
+texture_pressed = ExtResource("4_yhtnj")
+texture_hover = ExtResource("5_byey4")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="PressedBetArrow" type="Sprite2D" parent="."]
 position = Vector2(589, 710.5)
@@ -457,8 +506,16 @@ position = Vector2(643, 709)
 scale = Vector2(1.42308, 1.42308)
 texture = ExtResource("19_pbatd")
 
+[node name="BetLabel" type="Sprite2D" parent="."]
+position = Vector2(592, 653)
+scale = Vector2(1.97692, 1.97692)
+texture = ExtResource("23_c6w2i")
+
+[connection signal="button_up" from="WinScreen/HBoxContainer/VBoxContainer/Button" to="." method="_Ready"]
 [connection signal="button_up" from="WinScreen/HBoxContainer/VBoxContainer/Button2" to="." method="_on_MenuButton_up"]
+[connection signal="button_up" from="LostScreen/HBoxContainer/VBoxContainer/Button" to="." method="_Ready"]
 [connection signal="button_up" from="LostScreen/HBoxContainer/VBoxContainer/Button2" to="." method="_on_MenuButton_up"]
+[connection signal="button_up" from="MarginContainer/HBoxContainer/VBoxContainer/RoundStartButton" to="." method="_on_RoundStartButton_up"]
 [connection signal="button_up" from="BetArrow" to="." method="_on_BetButton_up"]
 [connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]
 [connection signal="button_up" from="HitButton" to="." method="_on_HitButton_up"]
