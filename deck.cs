@@ -57,5 +57,12 @@ namespace CardSystem
 			cards.RemoveAt(randomIndex);
 			return card;
 		}
+
+		public void cardPos()
+		{
+
+
+		}
+
 	}
 }

@@ -1,14 +1,21 @@
+using CardSystem;
 using Godot;
 using System;
+using System.Data.Common;
+using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
-public partial class Container : Godot.Container
+
+
+
+
+public partial class cardSelector : Godot.Container
 {
 	// Called when the node enters the scene tree for the first time.
-	
+
 	public TileMap cardMask;
-	
+
 	[Export] public Button moveBtnUp;
 	[Export] public Button moveBtnDown;
 	[Export] public Button moveBtnLeft;
@@ -17,14 +24,11 @@ public partial class Container : Godot.Container
 
 	public override void _Ready()
 	{
-	
-
 		//get the position of the tilemap "CardMask/CardSets" 
 		cardMask = GetNode<TileMap>("CardSets");
 		GD.Print(cardMask.Position.X + " " + cardMask.Position.Y);
 		GD.Print("Ready");
 	}
-
 
 
 	public void _on_btnMoveTileMapUp()
@@ -59,20 +63,11 @@ public partial class Container : Godot.Container
 		GD.Print("Right");
 	}
 
-
-	public void cardSelect()
+	public void selectCard(int suit, int id)
 	{
 		//get the position of the tilemap "CardMask/CardSets" 
-		
-		GD.Print(cardMask.Position.X + " " + cardMask.Position.Y);
-		
-
-		
-		}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		cardMask.Position = new Vector2(id - 1 * 75 - 3, suit * 104);
 
 	}
+
 }

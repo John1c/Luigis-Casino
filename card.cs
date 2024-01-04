@@ -12,6 +12,7 @@ using Godot.NativeInterop;
 
 namespace CardSystem
 {
+	
 	public class Card
 	{
 		public int suit { get; set; } = 0; // 0 = Diamonds, 1 = Clubs, 2 = Hearts, 3 = Spades

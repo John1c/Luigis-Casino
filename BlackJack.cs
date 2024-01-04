@@ -50,7 +50,6 @@ public partial class BlackJack : Control
 	public void _on_HitButton_up()
 	{
 		GD.Print("Hit");
-
 		//give another card to player
 		player.cards.Add(deck.drawRandomCard());
 		//check if player is bust
@@ -58,6 +57,7 @@ public partial class BlackJack : Control
 		{
 			GD.Print("Bust");
 			//end game
+
 		}
 		//if bust, end game
 	}
