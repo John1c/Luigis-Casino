@@ -33,10 +33,13 @@ public partial class BlackJack : Control
 		dealer.cards.Add(deck.drawRandomCard(true)); // hide the second card
 
 		// update player balance
-		player.Balance = 100;
+
+		setBalance(40);
 
 		// update renderer
 		UpdateRenderer();
+
+
 	}
 
 
@@ -101,10 +104,13 @@ public partial class BlackJack : Control
 			BetButton.Disabled = true;
 			BetButton.Hide();
 		}
+		updateBalance();
 	}
 
 	public void _on_HitButton_up()
 	{
+
+		setBalance(50);
 		GD.Print("Hit");
 		//give another card to player
 		player.cards.Add(deck.drawRandomCard());
@@ -156,6 +162,18 @@ public partial class BlackJack : Control
 		}
 	}
 
+	public void updateBalance()
+	{
+		Label balanceLable = GetNode<Label>("BalanceLabel");
+		balanceLable.Text = player.Balance.ToString();
+	}
+
+	public void setBalance(int amount)
+	{
+		GD.Print("Setting balance to " + amount);
+		player.Balance = amount;
+		updateBalance();
+	}
 	public enum WinState
 	{
 		Unknown = 0,
