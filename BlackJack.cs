@@ -24,7 +24,63 @@ public partial class BlackJack : Control
 		player = new playerHand(false);
 		dealer = new playerHand(true);
 		deck = new Deck(); // this creates a new deck of cards and shuffles them
+
+		// draw 2 cards for player and dealer
+		player.cards.Add(deck.drawRandomCard());
+		player.cards.Add(deck.drawRandomCard());
+
+		dealer.cards.Add(deck.drawRandomCard());
+		dealer.cards.Add(deck.drawRandomCard(true)); // hide the second card
+
+		// update player balance
+		player.Balance = 100;
+
+		// update renderer
+		UpdateRenderer();
 	}
+
+
+	public void UpdateRenderer()
+	{
+		// instantiate card objects for player and dealer (card.tscn)
+		// use card.getCardImagePosition() to get the position of the card image
+		// get root scene
+		var parent = GetTree().Root;
+		GD.Print(parent);
+
+		GD.Print("Player cards count: " + player.cards.Count);
+		GD.Print("Dealer cards count: " + dealer.cards.Count);
+
+		for (int i = 0; i < player.cards.Count; i++)
+		{
+			// instantiate card object
+			GD.Print("Creating card object... #" + i + " (" + player.cards[i].suit + "," + player.cards[i].id + ")");
+			
+			// load card scene
+			var card = (PackedScene)ResourceLoader.Load("res://card_tile_set.tscn");
+			Node2D cardInstance = card.Instantiate() as Node2D;
+			
+			// move card to a position on the screen
+			cardInstance.Position = new Vector2(100, 100);
+
+			var mask = cardInstance.GetNode<Container>("CardMask");
+			var cardSet = mask.GetNode<TileMap>("CardSets");
+			// set cell to card image based on suit, id
+			cardSet.SetCell(0, new Vector2I(player.cards[i].suit, player.cards[i].id));
+
+			// add card to scene
+			parent.AddChild(cardInstance);
+
+
+			GD.Print("Card added to scene");
+		}
+
+
+
+		GD.Print("Player hand value: " + player.handValue);
+	}
+
+
 
 	public void _on_BetButton_up()
 	{
@@ -59,7 +115,7 @@ public partial class BlackJack : Control
 			//end game
 
 		}
-		//if bust, end game
+		//if bust, end game (render game over text on top, and disable all buttons and inputs)
 	}
 
 
@@ -81,19 +137,29 @@ public partial class BlackJack : Control
 	{
 	}
 	
-	public static string getWinState(playerHand player, playerHand dealer)
+	public static WinState getWinState(playerHand player, playerHand dealer)
 	{
 		if (player.handValue > 21)
-			return "lost";
+			return WinState.lost;
 		else if(dealer.handValue > 21)
-			return "won";
+			return WinState.won;
 		else if(dealer.handValue == 21 && player.handValue == 21 && dealer.cards.Count == 2 && player.cards.Count == 2)
-			return "push";
+			return WinState.push;
 		else if(dealer.handValue >= player.handValue)
-			return "lost";
+			return WinState.lost;
 		else if (dealer.handValue < player.handValue)
-			return "won";
+			return WinState.won;
 		else
-			return "error could not determine win state";
+		{
+			GD.Print("Error: getWinState() returned default case");
+			return WinState.push; // push on default case
+		}
+	}
+
+	public enum WinState
+	{
+		lost,
+		won,
+		push
 	}
 }

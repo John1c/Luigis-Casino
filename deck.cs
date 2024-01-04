@@ -41,7 +41,7 @@ namespace CardSystem
 		}
 
 	
-		public Card drawRandomCard()
+		public Card drawRandomCard(bool isHidden = false)
 		{
 			// check if deck is empty
 			if (cards.Count == 0)
@@ -54,6 +54,7 @@ namespace CardSystem
 			Random random = new Random();
 			int randomIndex = random.Next(0, cards.Count);
 			Card card = cards[randomIndex];
+			card.isHidden = isHidden;
 			cards.RemoveAt(randomIndex);
 			return card;
 		}
