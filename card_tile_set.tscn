@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bfbkavey7wh12"]
 
 [ext_resource type="TileSet" uid="uid://k32pu4qiqnk0" path="res://CardTileSets.tres" id="1_j2ud5"]
-[ext_resource type="Script" path="res://Container.cs" id="1_lnstn"]
+[ext_resource type="Script" path="res://cardSelector.cs" id="1_lnstn"]
 
 [node name="Node2D" type="Node2D"]
 

@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bwdcxvhl2xiqv" path="res://Assets/StandPressed.png" id="11_2flyr"]
 [ext_resource type="Texture2D" uid="uid://dn8aclirwtht3" path="res://Assets/StandHover.png" id="12_gmycp"]
 [ext_resource type="TileSet" uid="uid://k32pu4qiqnk0" path="res://CardTileSets.tres" id="12_neqkx"]
-[ext_resource type="Script" path="res://Coins.cs" id="17_hj70i"]
+[ext_resource type="Script" path="res://CoinsRoot.cs" id="17_hj70i"]
 [ext_resource type="Texture2D" uid="uid://cwv17ugh6rl5h" path="res://icon.svg" id="18_eqji2"]
 [ext_resource type="PackedScene" uid="uid://t17845gvy5dd" path="res://coin_scene.tscn" id="19_hi04u"]
 [ext_resource type="PackedScene" uid="uid://bfbkavey7wh12" path="res://card_tile_set.tscn" id="20_tsh82"]
@@ -145,7 +145,7 @@ offset_right = 716.0
 offset_bottom = 577.0
 
 [node name="Node" parent="Node2D" instance=ExtResource("20_tsh82")]
-position = Vector2(384, 849)
+position = Vector2(239, 875)
 
 [connection signal="button_up" from="BetArrow" to="." method="_on_BetButton_up"]
 [connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]
