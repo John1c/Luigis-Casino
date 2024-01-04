@@ -1,6 +1,7 @@
 using CardSystem;
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
@@ -30,11 +31,9 @@ public partial class BlackJack : Control
 		player = new playerHand(false);
 		dealer = new playerHand(true);
 		deck = new Deck(); // this creates a new deck of cards and shuffles them
-		GD.Print("Deck created");
 		// update player balance
 		setBalance(30);
 		// update renderer
-		UpdateRenderer();
 		player.betAmount = 0;
 		// hide win/lose screen
 		WinScreen.Hide();
@@ -43,7 +42,6 @@ public partial class BlackJack : Control
 		// hide round start button
 		RoundStartButton.Hide();
 		RoundStart();
-				
 	}
 
 	public TextureButton _on_RoundStartButton_up()
@@ -59,31 +57,20 @@ public partial class BlackJack : Control
 	public void RoundStart()
 	{
 		// reset player and dealer hands
-		player.cards.Clear();
-		dealer.cards.Clear();
-		//reset deck
+		player.clearCards();
+		dealer.clearCards();
 		deck = new Deck();
-		// draw 2 cards for player and dealer
 		
+		// no need to null check, deck is always full at this point
 		player.cards.Add(deck.drawRandomCard());
 		player.cards.Add(deck.drawRandomCard());
 
-		GD.Print("add player card 1");
 		dealer.cards.Add(deck.drawRandomCard());
-		GD.Print("add player card 2");
 		dealer.cards.Add(deck.drawRandomCard(true)); // hide the second card
-		GD.Print("Player hand: ");
-		for (int i = 0; i < player.cards.Count; i++)
-		{
-			GD.Print(+ player.cards[i].value);	
-		}
-		GD.Print("Player hand value: " + player.handValue);
-		GD.Print("Dealer hand: ");
-		for (int i = 0; i < dealer.cards.Count; i++)
-		{
-			GD.Print(+ dealer.cards[i].value);	
-		}
-		GD.Print("Dealer hand value: " + dealer.handValue);
+
+		GD.Print("Updating renderer...");
+		UpdateRenderer();
+
 		//check if player has blackjack
 		if(player.handValue == 21)
 		{
@@ -98,43 +85,55 @@ public partial class BlackJack : Control
 			BetButton.Show();
 		}
 	}
+
 	public void UpdateRenderer()
 	{
-		// instantiate card objects for player and dealer (card.tscn)
-		// use card.getCardImagePosition() to get the position of the card image
-		// get root scene
-		var parent = GetTree().Root;
-		GD.Print(parent);
+		updateBalance(); // update balance label
 
-		GD.Print("Player cards count: " + player.cards.Count);
-		GD.Print("Dealer cards count: " + dealer.cards.Count);
+		var gameWindow = GetTree().Root;
 
-		for (int i = 0; i < player.cards.Count; i++)
+		// create card objects for player (skips if already created)
+		player.CreateCardObjects(gameWindow);
+		dealer.CreateCardObjects(gameWindow);
+
+		// player cards
+		Vector2 cardSize = new Vector2(69, 104);
+		int margin = 10;
+		int yOffset = 50;
+
+		float playerCardsWidth = player.cardObjects.Count * (cardSize.X + margin) - margin;
+		float playerCardsX = (gameWindow.Size.X - playerCardsWidth) / 2;
+		float playerCardsY = gameWindow.Size.Y / 4 * 3 - cardSize.Y / 2 + yOffset;
+
+		for (int i = 0; i < player.cardObjects.Count; i++)
 		{
-			// instantiate card object
-			GD.Print("Creating card object... #" + i + " (" + player.cards[i].suit + "," + player.cards[i].id + ")");
-			
-			// load card scene
-			var card = (PackedScene)ResourceLoader.Load("res://card_tile_set.tscn");
-			Node2D cardInstance = card.Instantiate() as Node2D;
-			
-			// move card to a position on the screen
-			cardInstance.Position = new Vector2(100, 100);
-
-			var mask = cardInstance.GetNode<Container>("CardMask");
-			var cardSet = mask.GetNode<TileMap>("CardSets");
-			// set cell to card image based on suit, id
-			cardSet.SetCell(0, new Vector2I(player.cards[i].suit, player.cards[i].id));
-
-			// add card to scene
-			parent.AddChild(cardInstance);
-
-
-			GD.Print("Card added to scene");
+			player.cardObjects[player.cards[i]].Position = new Vector2(playerCardsX + i * (cardSize.X + margin), playerCardsY);
 		}
 
+		// dealer cards
+		float dealerCardsWidth = dealer.cardObjects.Count * (cardSize.X + margin) - margin;
+		float dealerCardsX = (gameWindow.Size.X - dealerCardsWidth) / 2;
+		float dealerCardsY = gameWindow.Size.Y / 4 - cardSize.Y / 2 + yOffset;
 
+		for (int i = 0; i < dealer.cardObjects.Count; i++)
+		{
+			dealer.cardObjects[dealer.cards[i]].Position = new Vector2(dealerCardsX + i * (cardSize.X + margin), dealerCardsY);
+		}
 
+		// print hand value of both player and dealer (print dealer first like 6+4 = 10)
+		GD.Print("Dealer hand: ");
+		for (int i = 0; i < dealer.cards.Count; i++)
+		{
+			GD.Print("+" + dealer.cards[i].value);
+		}
+		GD.Print("Dealer hand value: " + dealer.handValue);
+
+		// print player hand value
+		GD.Print("Player hand: ");
+		for (int i = 0; i < player.cards.Count; i++)
+		{
+			GD.Print("+" + player.cards[i].value);
+		}
 		GD.Print("Player hand value: " + player.handValue);
 	}
 
@@ -160,14 +159,19 @@ public partial class BlackJack : Control
 			BetButton.Hide();
 			
 		}
-		updateBalance();
+		UpdateRenderer();
 		GD.Print(player.betAmount);
 	}
 
 	public void _on_HitButton_up()
 	{
 		GD.Print("Hit");
-		player.cards.Add(deck.drawRandomCard());
+		Card newcard = deck.drawRandomCard();
+
+		if (newcard != null)
+			player.cards.Add(newcard);
+		else
+			GD.Print("No more cards in deck");
 		
 
 		//print hand 
@@ -190,18 +194,20 @@ public partial class BlackJack : Control
 			_on_StandButton_up();
 		}
 		
-		
+		UpdateRenderer();
 	}
 
 
 	public void _on_StandButton_up()
 	{
 		GD.Print("Stand");
-		//end player turn
-		//start dealer turn
+		//reveal dealer card
+		dealer.cards[1].isHidden = false;
+		UpdateRenderer();
 		while(getWinState() == WinState.Continue)
 		{
 			dealer.cards.Add(deck.drawRandomCard());
+			UpdateRenderer();
 		}
 		// get win state
 		GD.Print("dealer hand value:" + dealer.handValue);
@@ -209,7 +215,7 @@ public partial class BlackJack : Control
 		{
 			case WinState.Lost:
 				GD.Print("You lost");
-				updateBalance();
+				UpdateRenderer();
 				winStateLabel.Text = "You lost";
 				if(player.Balance <= 0)
 				{
@@ -226,8 +232,7 @@ public partial class BlackJack : Control
 				winStateLabel.Text = "You won";
 				//points to player
 				player.Balance += player.betAmount * 2;
-				updateBalance();
-				Thread.Sleep(500);
+				UpdateRenderer();
 				//restart game
 				RoundStartButton.Show();
 				pooltexture.Hide();
@@ -239,8 +244,7 @@ public partial class BlackJack : Control
 				winStateLabel.Text = "Push";
 				// money back
 				player.Balance += player.betAmount;
-				updateBalance();
-				Thread.Sleep(500);
+				UpdateRenderer();
 				//restart game
 				RoundStartButton.Show();
 				pooltexture.Hide();
@@ -251,8 +255,7 @@ public partial class BlackJack : Control
 				winStateLabel.Text = "Blackjack";
 				// money back + 2.0x
 				player.Balance += player.betAmount * 3;
-				updateBalance();
-				Thread.Sleep(500);
+				UpdateRenderer();
 				//restart game
 				RoundStartButton.Show();
 				pooltexture.Hide();
@@ -297,7 +300,7 @@ public partial class BlackJack : Control
 			return WinState.Lost;
 		else if (dealer.handValue < player.handValue && dealer.handValue >= 17)
 			return WinState.Won;
-		else if (dealer.handValue <= 17)
+		else if (dealer.handValue < 17)
 			return WinState.Continue;
 		else
 		{
@@ -318,7 +321,7 @@ public partial class BlackJack : Control
 	{
 		GD.Print("Setting balance to " + amount);
 		player.Balance = amount;
-		updateBalance();
+		UpdateRenderer();
 	}
 	public enum WinState
 	{

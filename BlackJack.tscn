@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cswepbmdqqofw"]
+[gd_scene load_steps=35 format=3 uid="uid://cswepbmdqqofw"]
 
 [ext_resource type="Script" path="res://BlackJack.cs" id="1_a5ugd"]
 [ext_resource type="Texture2D" uid="uid://cl1kgyudgkcew" path="res://Assets/background.png" id="1_g04td"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://c5a7j3qrcr6qm" path="res://Assets/pressedNext_hand_button.png" id="4_yhtnj"]
 [ext_resource type="Texture2D" uid="uid://c7jrf8evcb5d0" path="res://Assets/hoverNext_hand_button.png" id="5_byey4"]
 [ext_resource type="Texture2D" uid="uid://baih145mqeb1b" path="res://Assets/HoverBetArrow.png" id="5_w3gq8"]
-[ext_resource type="Script" path="res://generateCardInHand.cs" id="6_7tinw"]
 [ext_resource type="Texture2D" uid="uid://boorkw4ntewrl" path="res://Assets/SettingsButton.png" id="6_c8rl5"]
 [ext_resource type="Texture2D" uid="uid://c51cw7ebjstaj" path="res://Assets/SettingsPressed.png" id="7_8ubf4"]
 [ext_resource type="Texture2D" uid="uid://y1hovn6loq6l" path="res://Assets/HitButton.png" id="7_lqcp0"]
@@ -387,10 +386,9 @@ offset_bottom = 123.0
 theme_override_font_sizes/font_size = 30
 text = "0
 "
-horizontal_alignment = 1
 
 [node name="X3" type="Sprite2D" parent="MarginContainer/HBoxContainer/VBoxContainer/pool"]
-position = Vector2(-16, 103)
+position = Vector2(-23, 102)
 scale = Vector2(2.00481, 2.00481)
 texture = ExtResource("19_pbatd")
 
@@ -432,10 +430,10 @@ text = "Menu"
 
 [node name="HitButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 531.0
-offset_top = 851.0
-offset_right = 734.0
-offset_bottom = 909.0
+offset_left = 287.0
+offset_top = 725.0
+offset_right = 490.0
+offset_bottom = 783.0
 texture_normal = ExtResource("7_lqcp0")
 texture_pressed = ExtResource("8_n24st")
 texture_hover = ExtResource("9_6i5y3")
@@ -444,10 +442,10 @@ stretch_mode = 0
 
 [node name="StandButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 532.0
-offset_top = 776.0
-offset_right = 734.0
-offset_bottom = 834.0
+offset_left = 288.0
+offset_top = 665.0
+offset_right = 490.0
+offset_bottom = 723.0
 texture_normal = ExtResource("10_1bn56")
 texture_pressed = ExtResource("11_2flyr")
 texture_hover = ExtResource("12_gmycp")
@@ -470,9 +468,9 @@ layout_mode = 2
 [node name="ShownCard2" type="TextureRect" parent="Hand"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-script = ExtResource("6_7tinw")
 
 [node name="TileMap" type="TileMap" parent="Hand"]
+visible = false
 position = Vector2(431.993, 16.4483)
 scale = Vector2(2, 2)
 tile_set = ExtResource("12_neqkx")
@@ -525,7 +523,7 @@ texture = ExtResource("21_1nh5k")
 metadata/_edit_lock_ = true
 
 [node name="X2" type="Sprite2D" parent="."]
-position = Vector2(643, 709)
+position = Vector2(656, 709)
 scale = Vector2(1.42308, 1.42308)
 texture = ExtResource("19_pbatd")
 

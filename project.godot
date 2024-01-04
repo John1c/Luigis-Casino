@@ -23,6 +23,7 @@ BgMusic="*res://BGMusic.tscn"
 
 window/size/viewport_width=769
 window/size/viewport_height=1142
+window/size/resizable=false
 
 [dotnet]
 

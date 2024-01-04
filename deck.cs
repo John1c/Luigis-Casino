@@ -22,7 +22,7 @@ namespace CardSystem
 
 			// create deck
 			for (int suit = 0; suit < 4; suit++) // suits (spades, hearts, diamonds, clubs)
-				for (int id = 1; id < 14; id++) // id's (1-13) 
+				for (int id = 0; id < 13; id++) // id's (1-13) 
 					cards.Add(new Card(suit, id));
 		}
 
@@ -45,10 +45,7 @@ namespace CardSystem
 		{
 			// check if deck is empty
 			if (cards.Count == 0)
-			{
-				GD.Print("Deck is empty!");
 				return null;
-			}
 
 			// draw random card
 			Random random = new Random();
