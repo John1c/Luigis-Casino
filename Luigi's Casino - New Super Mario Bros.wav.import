@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ckslv8kfqsfy0"
+path="res://.godot/imported/Luigi's Casino - New Super Mario Bros.wav-b688ce12ceafee968bc45c07117415b3.sample"
+
+[deps]
+
+source_file="res://Luigi's Casino - New Super Mario Bros.wav"
+dest_files=["res://.godot/imported/Luigi's Casino - New Super Mario Bros.wav-b688ce12ceafee968bc45c07117415b3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
