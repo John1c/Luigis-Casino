@@ -49,9 +49,6 @@ namespace CardSystem
 			for (int i = 0; i < hand.cards.Count(); i++)
 				if(hand.cards[i].value == 1)
 					hand.cards[i].value = 11;
-
-			
-
 			return sum;
 		}
 

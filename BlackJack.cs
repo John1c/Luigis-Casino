@@ -25,6 +25,22 @@ public partial class BlackJack : Control
 		dealer = new playerHand(true);
 		deck = new Deck(); // this creates a new deck of cards and shuffles them
 
+		// update player balance
+		player.Balance = 100;
+
+		// update renderer
+		UpdateRenderer();
+		
+	}
+	public void RoundStart()
+	{
+		// reset player and dealer hands
+		player.cards.Clear();
+		dealer.cards.Clear();
+		//reset deck
+		deck = new Deck();
+		// shuffel deck
+		deck.shuffleDeck();
 		// draw 2 cards for player and dealer
 		player.cards.Add(deck.drawRandomCard());
 		player.cards.Add(deck.drawRandomCard());
@@ -32,14 +48,12 @@ public partial class BlackJack : Control
 		dealer.cards.Add(deck.drawRandomCard());
 		dealer.cards.Add(deck.drawRandomCard(true)); // hide the second card
 
-		// update player balance
-		player.Balance = 100;
-
-		// update renderer
-		UpdateRenderer();
+		//check if player has blackjack
+		if(player.handValue == 21)
+		{
+			_on_StandButton_up();
+		}
 	}
-
-
 	public void UpdateRenderer()
 	{
 		// instantiate card objects for player and dealer (card.tscn)
@@ -113,9 +127,13 @@ public partial class BlackJack : Control
 		{
 			GD.Print("Bust");
 			//end game
-
 		}
-		//if bust, end game (render game over text on top, and disable all buttons and inputs)
+		else if(player.handValue == 21)
+		{
+			_on_StandButton_up();
+		}
+		
+		
 	}
 
 
@@ -124,6 +142,46 @@ public partial class BlackJack : Control
 		GD.Print("Stand");
 		//end player turn
 		//start dealer turn
+		while(getWinState() == WinState.Continue)
+		{
+			dealer.cards.Add(deck.drawRandomCard());
+		}
+		// get win state
+		
+		switch(getWinState())
+		{
+			case WinState.Lost:
+				GD.Print("You lost");
+				//restart game
+				// no points ):
+				break;
+			case WinState.Won:
+				GD.Print("You won");
+				//restart game
+				// points to player
+				break;
+			case WinState.Push:
+				GD.Print("Push");
+				//restart game
+				// money back
+				break;
+			case WinState.BlackJack:
+				GD.Print("BlackJack");
+				//restart game
+				// money back + 1.5x
+				break;
+			case WinState.Unknown:
+				GD.Print("Error: getWinState() returned unknown");
+				break;
+			case WinState.Continue:
+				GD.Print("Error: getWinState() returned continue");
+				break;
+			default:
+				GD.Print("Super Error: getWinState() returned default case... how tf did you manage to fo this");
+				break;
+		}
+
+		
 	}
 	public void _on_MenuButton_up()
 	{
@@ -137,7 +195,7 @@ public partial class BlackJack : Control
 	{
 	}
 	
-	public static WinState getWinState(playerHand player, playerHand dealer)
+	public WinState getWinState()
 	{
 		if (player.handValue > 21)
 			return WinState.Lost;
@@ -145,10 +203,14 @@ public partial class BlackJack : Control
 			return WinState.Won;
 		else if(dealer.handValue == 21 && player.handValue == 21 && dealer.cards.Count == 2 && player.cards.Count == 2)
 			return WinState.Push;
+		else if(player.handValue == 21 && player.cards.Count == 2)
+			return WinState.BlackJack; 
 		else if(dealer.handValue >= player.handValue)
 			return WinState.Lost;
 		else if (dealer.handValue < player.handValue)
 			return WinState.Won;
+		else if (dealer.handValue < 18)
+			return WinState.Continue;
 		else
 		{
 			GD.Print("Error: getWinState() returned default case");
@@ -162,5 +224,7 @@ public partial class BlackJack : Control
 		Lost = 1,
 		Won = 2,
 		Push = 3,
+		BlackJack = 4,
+		Continue = 5,
 	}
 }
