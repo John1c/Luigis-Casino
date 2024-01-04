@@ -227,7 +227,6 @@ public partial class BlackJack : Control
 				//points to player
 				player.Balance += player.betAmount * 2;
 				updateBalance();
-				Thread.Sleep(500);
 				//restart game
 				RoundStartButton.Show();
 				pooltexture.Hide();
@@ -240,7 +239,7 @@ public partial class BlackJack : Control
 				// money back
 				player.Balance += player.betAmount;
 				updateBalance();
-				Thread.Sleep(500);
+				
 				//restart game
 				RoundStartButton.Show();
 				pooltexture.Hide();
@@ -252,7 +251,7 @@ public partial class BlackJack : Control
 				// money back + 2.0x
 				player.Balance += player.betAmount * 3;
 				updateBalance();
-				Thread.Sleep(500);
+				
 				//restart game
 				RoundStartButton.Show();
 				pooltexture.Hide();
