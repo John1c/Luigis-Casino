@@ -10,6 +10,9 @@ public partial class BlackJack : Control
 	[Export] public TextureButton StandButton;
 	[Export] public TextureButton BetButton;
 	[Export] public TextureButton MenuButton;
+	[Export] public Control WinScreen;
+	[Export] public Control LoseScreen;
+	[Export] public Label winStateLabel;
 
 
 	// Variables
@@ -30,7 +33,14 @@ public partial class BlackJack : Control
 
 		// update renderer
 		UpdateRenderer();
+
+		// hide win/lose screen
+		WinScreen.Hide();
+		LoseScreen.Hide();
+
+		// Get winStateLabel path
 		
+				
 	}
 	public void RoundStart()
 	{
@@ -120,8 +130,10 @@ public partial class BlackJack : Control
 		{
 			BetButton.Disabled = true;
 			BetButton.Hide();
+			LoseScreen.Show();
 		}
 		updateBalance();
+		GD.Print(player.betAmount);
 	}
 
 	public void _on_HitButton_up()
@@ -161,23 +173,41 @@ public partial class BlackJack : Control
 		{
 			case WinState.Lost:
 				GD.Print("You lost");
+				player.betAmount = 0;
+				
 				//restart game
-				// no points ):
+				RoundStart();
+				winStateLabel.Text = "You lost";
 				break;
 			case WinState.Won:
 				GD.Print("You won");
+				
 				//restart game
-				// points to player
+				RoundStart();
+				winStateLabel.Text = "You won";
+				//points to player
+				
 				break;
 			case WinState.Push:
+				
 				GD.Print("Push");
+				
 				//restart game
+				RoundStart();
+				winStateLabel.Text = "Push";
 				// money back
+				
+				
 				break;
 			case WinState.BlackJack:
 				GD.Print("BlackJack");
+				
 				//restart game
+				RoundStart();
+				winStateLabel.Text = "Blackjack";
 				// money back + 1.5x
+				
+				
 				break;
 			case WinState.Unknown:
 				GD.Print("Error: getWinState() returned unknown");

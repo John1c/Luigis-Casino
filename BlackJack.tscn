@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cswepbmdqqofw"]
+[gd_scene load_steps=32 format=3 uid="uid://cswepbmdqqofw"]
 
 [ext_resource type="Script" path="res://BlackJack.cs" id="1_a5ugd"]
 [ext_resource type="Texture2D" uid="uid://cl1kgyudgkcew" path="res://Assets/background.png" id="1_g04td"]
@@ -22,7 +22,43 @@
 [ext_resource type="PackedScene" uid="uid://bfbkavey7wh12" path="res://card_tile_set.tscn" id="20_tsh82"]
 [ext_resource type="Texture2D" uid="uid://b18jawjuf7xg4" path="res://Assets/Numbers.png" id="21_1nh5k"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton")]
+[sub_resource type="Curve" id="Curve_p8aia"]
+_data = [Vector2(0.679688, 0.846154), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_q78em"]
+curve_y = SubResource("Curve_p8aia")
+
+[sub_resource type="Curve" id="Curve_x00cp"]
+_data = [Vector2(0.140625, 0.802198), 0.0, 0.0, 0, 0, Vector2(0.9375, 0.879121), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_b3kx8"]
+_data = [Vector2(0.382813, 0.736264), 0.0, 0.0, 0, 0, Vector2(0.867188, 0.824176), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_5hr8v"]
+_data = [Vector2(0.640625, 0.043956), 0.0, 0.0, 0, 0, Vector2(0.960938, 0.681319), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_eg7pa"]
+curve_x = SubResource("Curve_x00cp")
+curve_y = SubResource("Curve_b3kx8")
+curve_z = SubResource("Curve_5hr8v")
+
+[sub_resource type="Curve" id="Curve_5vtep"]
+
+[sub_resource type="CurveTexture" id="CurveTexture_dwe0k"]
+curve = SubResource("Curve_5vtep")
+
+[sub_resource type="Curve" id="Curve_5byvh"]
+_data = [Vector2(0.228571, 0.186813), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_qfaiv"]
+curve = SubResource("Curve_5byvh")
+
+[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton", "WinScreen", "LoseScreen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +70,8 @@ HitButton = NodePath("HitButton")
 StandButton = NodePath("StandButton")
 BetButton = NodePath("BetArrow")
 MenuButton = NodePath("MenuButton")
+WinScreen = NodePath("WinScreen")
+LoseScreen = NodePath("LostScreen")
 
 [node name="Backdrop" type="TextureRect" parent="."]
 layout_mode = 1
@@ -43,6 +81,233 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_g04td")
+
+[node name="WinScreen" type="Control" parent="."]
+visible = false
+top_level = true
+clip_contents = true
+layout_mode = 2
+anchors_preset = 0
+offset_left = 192.0
+offset_top = 396.0
+offset_right = 565.0
+offset_bottom = 697.0
+
+[node name="TextureRect2" type="TextureRect" parent="WinScreen"]
+layout_mode = 0
+offset_left = 373.0
+offset_top = -1.0
+offset_right = 675.0
+offset_bottom = 371.0
+rotation = 1.57079
+texture = SubResource("CurveXYZTexture_q78em")
+
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen/TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect2" type="TextureRect" parent="WinScreen/TextureRect2/MarginContainer"]
+layout_mode = 2
+texture = SubResource("CurveXYZTexture_eg7pa")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="WinScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinScreen"]
+layout_mode = 2
+offset_left = 120.0
+offset_right = 253.0
+offset_bottom = 301.0
+
+[node name="HSeparator4" type="HSeparator" parent="WinScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator5" type="HSeparator" parent="WinScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator6" type="HSeparator" parent="WinScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator7" type="HSeparator" parent="WinScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator8" type="HSeparator" parent="WinScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WinScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "YOU WIN"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WinScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinScreen/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="HSeparator2" type="HSeparator" parent="WinScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="WinScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator5" type="HSeparator" parent="WinScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator6" type="HSeparator" parent="WinScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="WinScreen/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Button2" type="Button" parent="WinScreen/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="LostScreen" type="Control" parent="."]
+visible = false
+top_level = true
+clip_contents = true
+layout_mode = 2
+anchors_preset = 0
+offset_left = 192.0
+offset_top = 396.0
+offset_right = 565.0
+offset_bottom = 697.0
+
+[node name="TextureRect" type="TextureRect" parent="LostScreen"]
+layout_mode = 0
+offset_left = 373.0
+offset_top = -1.0
+offset_right = 675.0
+offset_bottom = 371.0
+rotation = 1.57079
+texture = SubResource("CurveTexture_dwe0k")
+
+[node name="MarginContainer" type="MarginContainer" parent="LostScreen/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect2" type="TextureRect" parent="LostScreen/TextureRect/MarginContainer"]
+layout_mode = 2
+texture = SubResource("CurveTexture_qfaiv")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="LostScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LostScreen"]
+layout_mode = 2
+offset_left = 112.0
+offset_right = 265.0
+offset_bottom = 301.0
+
+[node name="HSeparator4" type="HSeparator" parent="LostScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator5" type="HSeparator" parent="LostScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator6" type="HSeparator" parent="LostScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator7" type="HSeparator" parent="LostScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator8" type="HSeparator" parent="LostScreen/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LostScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Bankrupt"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LostScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LostScreen/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="HSeparator2" type="HSeparator" parent="LostScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="LostScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator5" type="HSeparator" parent="LostScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="HSeparator6" type="HSeparator" parent="LostScreen/HBoxContainer/VBoxContainer"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="LostScreen/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Button2" type="Button" parent="LostScreen/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -55,6 +320,7 @@ offset_right = 1.0
 offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="PressedBetArrow" type="Sprite2D" parent="."]
 position = Vector2(589, 710.5)
@@ -167,16 +433,16 @@ scale = Vector2(2.5834, 2.5834)
 texture = ExtResource("20_7wos5")
 
 [node name="Coin2" type="Sprite2D" parent="."]
-position = Vector2(649, 710)
+position = Vector2(708, 708)
 scale = Vector2(1.93069, 1.93069)
 texture = ExtResource("20_7wos5")
 
 [node name="Control" type="Control" parent="."]
 clip_contents = true
 anchors_preset = 0
-offset_left = 704.0
+offset_left = 668.0
 offset_top = 694.0
-offset_right = 720.0
+offset_right = 684.0
 offset_bottom = 723.0
 
 [node name="Numbers" type="Sprite2D" parent="Control"]
@@ -186,10 +452,12 @@ texture = ExtResource("21_1nh5k")
 metadata/_edit_lock_ = true
 
 [node name="X2" type="Sprite2D" parent="."]
-position = Vector2(683, 709)
+position = Vector2(643, 709)
 scale = Vector2(1.42308, 1.42308)
 texture = ExtResource("19_pbatd")
 
+[connection signal="button_up" from="WinScreen/HBoxContainer/VBoxContainer/Button2" to="." method="_on_MenuButton_up"]
+[connection signal="button_up" from="LostScreen/HBoxContainer/VBoxContainer/Button2" to="." method="_on_MenuButton_up"]
 [connection signal="button_up" from="BetArrow" to="." method="_on_BetButton_up"]
 [connection signal="button_up" from="MenuButton" to="." method="_on_MenuButton_up"]
 [connection signal="button_up" from="HitButton" to="." method="_on_HitButton_up"]
