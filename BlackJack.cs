@@ -204,7 +204,7 @@ public partial class BlackJack : Control
 			return WinState.Lost;
 		else if(dealer.handValue > 21)
 			return WinState.Won;
-		else if(dealer.handValue == 21 && player.handValue == 21 && dealer.cards.Count == 2 && player.cards.Count == 2)
+		else if(dealer.handValue == player.handValue)
 			return WinState.Push;
 		else if(player.handValue == 21 && player.cards.Count == 2)
 			return WinState.BlackJack; 
