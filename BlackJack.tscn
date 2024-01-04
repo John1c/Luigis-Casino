@@ -62,7 +62,7 @@ point_count = 1
 [sub_resource type="CurveTexture" id="CurveTexture_qfaiv"]
 curve = SubResource("Curve_5byvh")
 
-[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton", "WinScreen", "LoseScreen", "winStateLabel", "BalanceLabel", "RoundStartButton")]
+[node name="Control" type="Control" node_paths=PackedStringArray("HitButton", "StandButton", "BetButton", "MenuButton", "WinScreen", "LoseScreen", "winStateLabel", "BalanceLabel", "RoundStartButton", "pooltexture")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -79,6 +79,7 @@ LoseScreen = NodePath("LostScreen")
 winStateLabel = NodePath("winStates/VBoxContainer/winStateLabel")
 BalanceLabel = NodePath("BalanceLabel")
 RoundStartButton = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RoundStartButton")
+pooltexture = NodePath("MarginContainer/HBoxContainer/VBoxContainer/pool")
 
 [node name="Backdrop" type="TextureRect" parent="."]
 layout_mode = 1
@@ -360,9 +361,11 @@ alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 11
 alignment = 1
 
 [node name="RoundStartButton" type="TextureButton" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 texture_normal = ExtResource("3_0gb1j")
@@ -370,6 +373,26 @@ texture_pressed = ExtResource("4_yhtnj")
 texture_hover = ExtResource("5_byey4")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="pool" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+texture = ExtResource("20_7wos5")
+
+[node name="MoneyPool" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/pool"]
+layout_mode = 2
+offset_top = 81.0
+offset_right = 70.0
+offset_bottom = 123.0
+theme_override_font_sizes/font_size = 30
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="X3" type="Sprite2D" parent="MarginContainer/HBoxContainer/VBoxContainer/pool"]
+position = Vector2(-16, 103)
+scale = Vector2(2.00481, 2.00481)
+texture = ExtResource("19_pbatd")
 
 [node name="PressedBetArrow" type="Sprite2D" parent="."]
 position = Vector2(589, 710.5)
@@ -454,13 +477,13 @@ position = Vector2(431.993, 16.4483)
 scale = Vector2(2, 2)
 tile_set = ExtResource("12_neqkx")
 format = 2
-layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2)
+layer_0/tile_data = PackedInt32Array(-655360, 655360, 4, -655359, 589824, 2, -262149, 0, 0, -196613, 0, 1, -131077, 0, 2, -262148, 65536, 0, -196612, 65536, 1, -131076, 65536, 2, -262147, 131072, 0, -196611, 131072, 1, -131075, 131072, 2, -262146, 196608, 0, -196610, 196608, 1, -131074, 196608, 2, -262145, 262144, 0, -196609, 262144, 1, -131073, 262144, 2, -327680, 327680, 0, -262144, 327680, 1, -196608, 327680, 2, -327679, 393216, 0, -262143, 393216, 1, -196607, 393216, 2, -327678, 458752, 0, -262142, 458752, 1, -196606, 458752, 2, -327677, 524288, 0, -262141, 524288, 1, -196605, 524288, 2, -327676, 589824, 0, -262140, 589824, 1, -196604, 589824, 2, -327675, 655360, 0, -262139, 655360, 1, -196603, 655360, 2, -327674, 720896, 0, -262138, 720896, 1, -196602, 720896, 2, -327673, 786432, 0, -262137, 786432, 1, -196601, 786432, 2)
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("17_hj70i")
 
 [node name="Node" parent="Node2D" instance=ExtResource("20_tsh82")]
-position = Vector2(239, 875)
+position = Vector2(-191, 624)
 
 [node name="X" type="Sprite2D" parent="."]
 position = Vector2(670, 606)
@@ -468,11 +491,10 @@ scale = Vector2(1.38679, 1.51741)
 texture = ExtResource("19_pbatd")
 
 [node name="BalanceLabel" type="Label" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 595.0
+offset_left = 594.0
 offset_top = 583.0
-offset_right = 649.0
+offset_right = 648.0
 offset_bottom = 628.0
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 2

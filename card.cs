@@ -16,7 +16,7 @@ namespace CardSystem
 	public class Card
 	{
 		public int suit { get; set; } = 0; // 0 = Diamonds, 1 = Clubs, 2 = Hearts, 3 = Spades
-		public int id { get; set; } = 0; // 1 = Ace, 1 = 2, 2 = 3, ... 9 = 10, 11 = Jack, 12 = Queen, 13 = King
+		public int id { get; set; } = 0; // 1 = Ace, 2 = 2, 3 = 3, ... 9 = 10, 11 = Jack, 12 = Queen, 13 = King
 		public int value { get; set; } = 0; //
 		public bool isHidden { get; set; } = false;
 

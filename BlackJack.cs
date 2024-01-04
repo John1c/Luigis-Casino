@@ -16,6 +16,7 @@ public partial class BlackJack : Control
 	[Export] public Label winStateLabel;
 	[Export] public Label BalanceLabel;
 	[Export] public TextureButton RoundStartButton;
+	[Export] public TextureRect pooltexture;
 
 	// Variables
 	public playerHand player;
@@ -31,34 +32,35 @@ public partial class BlackJack : Control
 		deck = new Deck(); // this creates a new deck of cards and shuffles them
 		GD.Print("Deck created");
 		// update player balance
-		player.Balance = 30;
 		setBalance(30);
 		// update renderer
 		UpdateRenderer();
-
+		player.betAmount = 0;
 		// hide win/lose screen
 		WinScreen.Hide();
 		LoseScreen.Hide();
-
+		winStateLabel.Text = "";
 		// hide round start button
 		RoundStartButton.Hide();
-		
+		RoundStart();
 				
 	}
 
 	public TextureButton _on_RoundStartButton_up()
 	{	
 		RoundStartButton.Hide();
+		player.betAmount = 0;
 		GD.Print("Round Start");
-		RoundStart();
+		RoundStart();	
+		pooltexture.Show();
 		return null;
 	}
 
 	public void RoundStart()
 	{
 		// reset player and dealer hands
-		player = new playerHand();
-		dealer = new playerHand(true);
+		player.cards.Clear();
+		dealer.cards.Clear();
 		//reset deck
 		deck = new Deck();
 		// draw 2 cards for player and dealer
@@ -76,6 +78,12 @@ public partial class BlackJack : Control
 			GD.Print(+ player.cards[i].value);	
 		}
 		GD.Print("Player hand value: " + player.handValue);
+		GD.Print("Dealer hand: ");
+		for (int i = 0; i < dealer.cards.Count; i++)
+		{
+			GD.Print(+ dealer.cards[i].value);	
+		}
+		GD.Print("Dealer hand value: " + dealer.handValue);
 		//check if player has blackjack
 		if(player.handValue == 21)
 		{
@@ -84,7 +92,7 @@ public partial class BlackJack : Control
 		
 		winStateLabel.Text = "";
 		
-		if(BetButton.Disabled == true && player.Balance > 0)
+		if(BetButton.Disabled == true)
 		{
 			BetButton.Disabled = false;
 			BetButton.Show();
@@ -201,17 +209,16 @@ public partial class BlackJack : Control
 		{
 			case WinState.Lost:
 				GD.Print("You lost");
-				player.Balance -= player.betAmount;
-				player.betAmount = 0;
+				updateBalance();
 				winStateLabel.Text = "You lost";
-				if(player.Balance == 0)
+				if(player.Balance <= 0)
 				{
 					LoseScreen.Show();
 				}
 				
 				//restart game
 				RoundStartButton.Show();
-
+				pooltexture.Hide();
 				break;
 			case WinState.Won:
 				GD.Print("You won");
@@ -219,11 +226,11 @@ public partial class BlackJack : Control
 				winStateLabel.Text = "You won";
 				//points to player
 				player.Balance += player.betAmount * 2;
-
+				updateBalance();
 				Thread.Sleep(500);
 				//restart game
 				RoundStartButton.Show();
-				
+				pooltexture.Hide();
 				break;
 			case WinState.Push:
 				
@@ -232,22 +239,23 @@ public partial class BlackJack : Control
 				winStateLabel.Text = "Push";
 				// money back
 				player.Balance += player.betAmount;
-
+				updateBalance();
 				Thread.Sleep(500);
 				//restart game
 				RoundStartButton.Show();
-								
+				pooltexture.Hide();
 				break;
 			case WinState.BlackJack:
 				GD.Print("BlackJack");
 				
 				winStateLabel.Text = "Blackjack";
-				// money back + 1.5x
-				player.Balance += (int)(player.betAmount * 2.5);
-
+				// money back + 2.0x
+				player.Balance += player.betAmount * 3;
+				updateBalance();
 				Thread.Sleep(500);
 				//restart game
 				RoundStartButton.Show();
+				pooltexture.Hide();
 
 				break;
 			case WinState.Unknown:
@@ -285,11 +293,11 @@ public partial class BlackJack : Control
 			return WinState.Push;
 		else if(player.handValue == 21 && player.cards.Count == 2)
 			return WinState.BlackJack; 
-		else if(dealer.handValue >= player.handValue)
+		else if(dealer.handValue > player.handValue)
 			return WinState.Lost;
-		else if (dealer.handValue < player.handValue)
+		else if (dealer.handValue < player.handValue && dealer.handValue >= 17)
 			return WinState.Won;
-		else if (dealer.handValue < 18)
+		else if (dealer.handValue <= 17)
 			return WinState.Continue;
 		else
 		{
@@ -302,6 +310,8 @@ public partial class BlackJack : Control
 	{
 		Label balanceLable = GetNode<Label>("BalanceLabel");
 		balanceLable.Text = player.Balance.ToString();
+		Label MoneyPool = GetNode<Label>("MarginContainer/HBoxContainer/VBoxContainer/pool/MoneyPool");
+		MoneyPool.Text = player.betAmount.ToString();
 	}
 
 	public void setBalance(int amount)
