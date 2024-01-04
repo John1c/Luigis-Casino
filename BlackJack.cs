@@ -31,8 +31,8 @@ public partial class BlackJack : Control
 		deck = new Deck(); // this creates a new deck of cards and shuffles them
 		GD.Print("Deck created");
 		// update player balance
-		player.Balance = 100;
-
+		player.Balance = 30;
+		setBalance(30);
 		// update renderer
 		UpdateRenderer();
 
@@ -150,7 +150,7 @@ public partial class BlackJack : Control
 		{
 			BetButton.Disabled = true;
 			BetButton.Hide();
-			LoseScreen.Show();
+			
 		}
 		updateBalance();
 		GD.Print(player.betAmount);
@@ -204,7 +204,10 @@ public partial class BlackJack : Control
 				player.Balance -= player.betAmount;
 				player.betAmount = 0;
 				winStateLabel.Text = "You lost";
-
+				if(player.Balance == 0)
+				{
+					LoseScreen.Show();
+				}
 				
 				//restart game
 				RoundStartButton.Show();

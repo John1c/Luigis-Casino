@@ -8,7 +8,7 @@ namespace CardSystem
 	public class playerHand
 	{
 		public bool isDealer = false;
-		public int Balance = 40;
+		public int Balance;
 		public int betAmount = 0;
 		public List<Card> cards = new List<Card>();
 		public int handValue {
