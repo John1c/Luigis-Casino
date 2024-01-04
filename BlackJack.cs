@@ -53,6 +53,12 @@ public partial class BlackJack : Control
 		{
 			_on_StandButton_up();
 		}
+
+		if(BetButton.Disabled == true && player.Balance > 0)
+		{
+			BetButton.Disabled = false;
+			BetButton.Show();
+		}
 	}
 	public void UpdateRenderer()
 	{
