@@ -81,6 +81,10 @@ public partial class BlackJack : Control
 
 		// show total bet pool
 		pooltexture.Show();
+
+		// reset dealer and player cards
+		player.clearCards();
+		dealer.clearCards();
 	}
 
 	public void RoundStart()
@@ -233,12 +237,12 @@ public partial class BlackJack : Control
 		StandButton.Hide();
 		HitButton.Hide();
 
-		while(getWinState() == WinState.Continue)
+		while(getGameState() == WinState.Continue)
 		{
 			dealer.cards.Add(deck.drawRandomCard());
 		}
 
-		switch(getWinState())
+		switch(getGameState())
 		{
 			case WinState.Lost:
 				GD.Print("You lost");
@@ -290,14 +294,12 @@ public partial class BlackJack : Control
 	{
 	}
 	
-	public WinState getWinState()
+	public WinState getGameState()
 	{
 		if (player.handValue > 21)
 			return WinState.Lost;
 		else if(dealer.handValue > 21)
 			return WinState.Won;
-		else if(dealer.handValue == player.handValue)
-			return WinState.Push;
 		else if(player.handValue == 21 && player.cards.Count == 2)
 			return WinState.BlackJack; 
 		else if(dealer.handValue > player.handValue)
@@ -306,6 +308,8 @@ public partial class BlackJack : Control
 			return WinState.Won;
 		else if (dealer.handValue < 17)
 			return WinState.Continue;
+		else if(dealer.handValue == player.handValue)
+			return WinState.Push;
 		else
 		{
 			GD.Print("Error: getWinState() returned default case");
